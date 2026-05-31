@@ -131,7 +131,7 @@ Scrutins.json.zip ──► scripts/ingest-scrutins.mjs ──► public/data/sc
       "sort",          // adopté | rejeté
       "dossier",       // { ref, libelle } | null
       "synthese",      // { pour, contre, abstention, nonVotants }
-      "themes": [],    // ⟵ À RENSEIGNER (étape suivante)
+      "themes",        // { subthemes: [ids], tags: [ids] } — cf. taxonomy.json
       "discriminance", // { clivant, pour, contre, abstention }
       "positions": {   // par groupe : la cible de comparaison du quiz
         "PO845401": { "position", "pour", "contre", "abstention", "membres" }
@@ -160,16 +160,18 @@ L'ingestion les rend visibles ; il faudra les afficher dans l'exercice :
 
 ---
 
-## 7. Décisions ouvertes — prochaine étape
+## 7. Thématisation — fait
 
-1. **Thématisation** (le gros morceau éditorial). Affecter 1–n thèmes à chacun
-   des ~115 votes. Approches :
-   - manuelle (qualité maximale, ~115 entrées, faisable) ;
-   - assistée (classification auto par titre/dossier, puis validation humaine) ;
-   - taxonomie de thèmes à définir (écologie, fiscalité, libertés, régalien,
-     social, institutions, international…).
-2. **Sélection des questions du quiz** : se limiter aux votes `clivants` ?
-   combien par thème ? équilibrer les thèmes ?
-3. **Résolution du groupe `PO847173`** (dissous) via le référentiel historique.
-4. **Granularité** : rester sur pour/contre/abstention, ou enrichir plus tard
+Taxonomie validée (cf. `docs/taxonomie-themes.md`) : **12 thèmes, 38
+sous-thèmes, 4 étiquettes**, dans `public/data/taxonomy.json`. Affectations des
+115 votes dans `scripts/themes.json`, fusionnées + validées par le script.
+Résultat : 115/115 classés.
+
+## 8. Décisions encore ouvertes
+
+1. **Sélection des questions du quiz** : se limiter aux votes `clivants` (59) ?
+   combien par thème ? équilibrer les thèmes ? (rappel : décision actée = on
+   garde aussi les votes consensuels, qui restent instructifs.)
+2. **Résolution du groupe `PO847173`** (dissous) via le référentiel historique.
+3. **Granularité** : rester sur pour/contre/abstention, ou enrichir plus tard
    avec les votes par article pour les textes phares ?

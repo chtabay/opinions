@@ -1,7 +1,8 @@
-# Taxonomie des thèmes — proposition (à valider)
+# Taxonomie des thèmes
 
-> **Statut : BROUILLON soumis à validation.** Rien n'est affecté tant que cette
-> taxonomie n'est pas arrêtée (décision « taxonomie d'abord »).
+> **Statut : VALIDÉE** (mai 2026). Implémentée dans `public/data/taxonomy.json`
+> (identifiants stables) ; les 115 votes sont affectés dans `scripts/themes.json`
+> et fusionnés dans `public/data/scrutins.json` par le script d'ingestion.
 
 Structure retenue : **thèmes de fond à deux niveaux** (thème → sous-thèmes) +
 **étiquettes transversales** qui se combinent librement. Taxonomie **dérivée des
@@ -108,8 +109,18 @@ sous-thème.
 
 ---
 
-## Prochaine étape (après validation)
+## Affectation — état
 
-Affectation des 115 votes selon l'approche **assistée puis validée** :
-classification automatique proposée (titre + dossier) → relecture et correction
-humaine → enrichissement du champ `themes` dans `public/data/scrutins.json`.
+Les 115 votes sont classés (1ʳᵉ passe assistée) : **115/115 classés, 38/38
+sous-thèmes utilisés, 17 votes multi-sous-thèmes**. Étiquettes : outre-mer (13),
+europe-international (5), ruralité (3), numérique (3).
+
+Pour **corriger une affectation** : éditer `scripts/themes.json` (keyé par `uid`,
+le champ `_title` aide à la relecture) puis relancer `npm run ingest:scrutins`.
+Le script valide chaque identifiant contre `taxonomy.json` et signale tout
+scrutin non classé.
+
+## Prochaine étape
+
+Construire le quiz par thèmes : sélection/équilibrage des questions, UI de
+réponse pour/contre/abstention, calcul de proximité avec chaque groupe.

@@ -34,6 +34,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 const CACHE = join(__dirname, '.cache')
 const OUT = join(ROOT, 'public', 'data', 'scrutins.json')
+const TAXONOMY = join(ROOT, 'public', 'data', 'taxonomy.json')
+const THEMES = join(__dirname, 'themes.json')
 
 const LEGISLATURE = 17
 const SCRUTINS_URL = `https://data.assemblee-nationale.fr/static/openData/repository/${LEGISLATURE}/loi/scrutins/Scrutins.json.zip`
@@ -163,10 +165,24 @@ function discriminance(positions) {
 
 // --- pipeline principal -----------------------------------------------------
 
+/** Charge la taxonomie + les affectations, et prépare la validation des ids. */
+async function loadThemes() {
+  const taxonomy = JSON.parse(await readFile(TAXONOMY, 'utf8'))
+  const validSub = new Set(taxonomy.themes.flatMap((t) => t.subthemes.map((s) => s.id)))
+  const validTag = new Set(taxonomy.tags.map((t) => t.id))
+  let assignments = {}
+  if (existsSync(THEMES)) assignments = JSON.parse(await readFile(THEMES, 'utf8'))
+  return { validSub, validTag, assignments }
+}
+
 async function main() {
   const { months, download } = parseArgs()
   const files = await getScrutinFiles(download)
   console.log(`${files.length} scrutins lus dans l'archive.`)
+
+  const { validSub, validTag, assignments } = await loadThemes()
+  const unknownIds = new Set()
+  const unclassified = []
 
   const cutoff = new Date()
   cutoff.setMonth(cutoff.getMonth() - months)
@@ -201,6 +217,21 @@ async function main() {
       }
     }
 
+    // Fusion des thèmes (affectations éditoriales depuis scripts/themes.json),
+    // avec validation des identifiants contre la taxonomie.
+    const assigned = assignments[s.uid]
+    const subthemes = (assigned?.subthemes || []).filter((id) => {
+      if (validSub.has(id)) return true
+      unknownIds.add(id)
+      return false
+    })
+    const tags = (assigned?.tags || []).filter((id) => {
+      if (validTag.has(id)) return true
+      unknownIds.add(id)
+      return false
+    })
+    if (subthemes.length === 0) unclassified.push(s.uid)
+
     const d = s.syntheseVote?.decompte || {}
     scrutins.push({
       uid: s.uid,
@@ -222,7 +253,7 @@ async function main() {
         abstention: toInt(d.abstentions),
         nonVotants: toInt(d.nonVotants),
       },
-      themes: [], // ÉTAPE SUIVANTE (éditoriale)
+      themes: { subthemes, tags },
       discriminance: discriminance(positions),
       positions,
     })
@@ -259,6 +290,16 @@ async function main() {
   console.log(`  Période : ${minDate} → ${maxDate}`)
   const byCat = scrutins.reduce((m, s) => ((m[s.category] = (m[s.category] || 0) + 1), m), {})
   console.log(`  Répartition : ${JSON.stringify(byCat)}`)
+
+  // Rapport de thématisation
+  const classifiedCount = scrutins.length - unclassified.length
+  console.log(`\n  Thèmes : ${classifiedCount}/${scrutins.length} scrutins classés.`)
+  if (unknownIds.size) {
+    console.warn(`  ⚠ Identifiants inconnus (absents de la taxonomie) : ${[...unknownIds].join(', ')}`)
+  }
+  if (unclassified.length) {
+    console.warn(`  ⚠ ${unclassified.length} scrutins NON classés : ${unclassified.join(', ')}`)
+  }
 }
 
 main().catch((err) => {

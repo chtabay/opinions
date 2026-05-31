@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "note": "Taxonomie des thèmes pour l'Exercice A. Le sous-thème (subtheme) est l'unité d'affectation ; le thème est le regroupement d'affichage. Les étiquettes (tags) sont transversales.",
+  "themes": [
+    {
+      "id": "economie",
+      "label": "Économie, fiscalité & entreprises",
+      "subthemes": [
+        { "id": "eco-budget", "label": "Budget & finances publiques" },
+        { "id": "eco-fiscalite", "label": "Fiscalité" },
+        { "id": "eco-entreprises", "label": "Entreprises & simplification" },
+        { "id": "eco-industrie", "label": "Politique industrielle" }
+      ]
+    },
+    {
+      "id": "travail",
+      "label": "Travail, emploi & protection sociale",
+      "subthemes": [
+        { "id": "trav-emploi", "label": "Droit du travail & emploi" },
+        { "id": "trav-secu", "label": "Sécurité sociale & retraites" },
+        { "id": "trav-famille", "label": "Famille & allocations" },
+        { "id": "trav-fonctionpublique", "label": "Fonction publique" }
+      ]
+    },
+    {
+      "id": "logement",
+      "label": "Logement & urbanisme",
+      "subthemes": [
+        { "id": "log-loyers", "label": "Loyers & rapports locatifs" },
+        { "id": "log-construction", "label": "Construction & habitat" },
+        { "id": "log-urbanisme", "label": "Urbanisme & foncier" }
+      ]
+    },
+    {
+      "id": "ecologie",
+      "label": "Écologie, énergie & climat",
+      "subthemes": [
+        { "id": "ecolo-energie", "label": "Énergie" },
+        { "id": "ecolo-climat", "label": "Climat & adaptation" },
+        { "id": "ecolo-biodiversite", "label": "Biodiversité & milieux" }
+      ]
+    },
+    {
+      "id": "agriculture",
+      "label": "Agriculture & alimentation",
+      "subthemes": [
+        { "id": "agri-exercice", "label": "Conditions d'exercice agricole" },
+        { "id": "agri-alimentation", "label": "Alimentation & consommation" }
+      ]
+    },
+    {
+      "id": "sante",
+      "label": "Santé & fin de vie",
+      "subthemes": [
+        { "id": "sante-systeme", "label": "Système de santé & professionnels" },
+        { "id": "sante-acces", "label": "Accès aux soins" },
+        { "id": "sante-finvie", "label": "Fin de vie & soins palliatifs" }
+      ]
+    },
+    {
+      "id": "securite",
+      "label": "Sécurité, justice & pénal",
+      "subthemes": [
+        { "id": "secu-penal", "label": "Droit pénal & peines" },
+        { "id": "secu-ordre", "label": "Sécurité & ordre public" },
+        { "id": "secu-justice", "label": "Justice & procédure" }
+      ]
+    },
+    {
+      "id": "immigration",
+      "label": "Immigration & nationalité",
+      "subthemes": [
+        { "id": "immig-sejour", "label": "Séjour & asile" },
+        { "id": "immig-mineurs", "label": "Mineurs isolés" }
+      ]
+    },
+    {
+      "id": "libertes",
+      "label": "Libertés, société & mémoire",
+      "subthemes": [
+        { "id": "lib-droits", "label": "Droits & égalité" },
+        { "id": "lib-memoire", "label": "Mémoire & réparations" },
+        { "id": "lib-discriminations", "label": "Lutte contre les discriminations" },
+        { "id": "lib-culture", "label": "Culture & patrimoine" }
+      ]
+    },
+    {
+      "id": "education",
+      "label": "Éducation, enfance & numérique",
+      "subthemes": [
+        { "id": "educ-ecole", "label": "École & enseignement" },
+        { "id": "educ-enfance", "label": "Protection de l'enfance" },
+        { "id": "educ-numerique", "label": "Enfance & numérique" }
+      ]
+    },
+    {
+      "id": "institutions",
+      "label": "Institutions, démocratie & territoires",
+      "subthemes": [
+        { "id": "inst-elections", "label": "Vie démocratique & élections" },
+        { "id": "inst-gouvernement", "label": "Gouvernement & responsabilité" },
+        { "id": "inst-elus", "label": "Élus & collectivités" },
+        { "id": "inst-territoires", "label": "Statut des territoires" }
+      ]
+    },
+    {
+      "id": "defense",
+      "label": "Défense & international",
+      "subthemes": [
+        { "id": "def-armees", "label": "Défense & armées" },
+        { "id": "def-diplomatie", "label": "Diplomatie & traités" },
+        { "id": "def-evenements", "label": "Grands événements" }
+      ]
+    }
+  ],
+  "tags": [
+    { "id": "outre-mer", "label": "Outre-mer" },
+    { "id": "ruralite", "label": "Ruralité" },
+    { "id": "europe-international", "label": "Europe / international" },
+    { "id": "numerique", "label": "Numérique" }
+  ]
+}

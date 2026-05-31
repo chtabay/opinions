@@ -3,7 +3,7 @@
     "source": "data.assemblee-nationale.fr",
     "sourceUrl": "https://data.assemblee-nationale.fr/static/openData/repository/17/loi/scrutins/Scrutins.json.zip",
     "legislature": 17,
-    "generatedAt": "2026-05-31T14:56:16.526Z",
+    "generatedAt": "2026-05-31T15:40:27.375Z",
     "windowMonths": 12,
     "scrutinCount": 115,
     "dateRange": {
@@ -88,7 +88,14 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-memoire"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -200,7 +207,12 @@
         "abstention": 4,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "trav-emploi"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -312,7 +324,13 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-elus",
+          "educ-enfance"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -424,7 +442,12 @@
         "abstention": 20,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "log-construction"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -536,7 +559,15 @@
         "abstention": 3,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-elections",
+          "inst-territoires"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -648,7 +679,12 @@
         "abstention": 4,
         "nonVotants": 0
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "def-armees"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -760,7 +796,12 @@
         "abstention": 3,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "sante-acces"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 10,
@@ -872,7 +913,15 @@
         "abstention": 1,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "ecolo-biodiversite",
+          "agri-exercice"
+        ],
+        "tags": [
+          "ruralite"
+        ]
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -984,7 +1033,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "ecolo-biodiversite"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -1096,7 +1150,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-penal"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -1208,7 +1267,12 @@
         "abstention": 17,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "educ-ecole"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -1320,7 +1384,15 @@
         "abstention": 12,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-culture",
+          "def-diplomatie"
+        ],
+        "tags": [
+          "europe-international"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 10,
@@ -1432,7 +1504,13 @@
         "abstention": 13,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-ordre",
+          "immig-sejour"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -1544,7 +1622,12 @@
         "abstention": 5,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-fiscalite"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -1656,7 +1739,14 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "sante-systeme"
+        ],
+        "tags": [
+          "europe-international"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -1768,7 +1858,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-justice"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 11,
@@ -1880,7 +1975,12 @@
         "abstention": 30,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-entreprises"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -1992,7 +2092,15 @@
         "abstention": 1,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-culture",
+          "def-diplomatie"
+        ],
+        "tags": [
+          "europe-international"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -2104,7 +2212,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-justice"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -2216,7 +2329,14 @@
         "abstention": 25,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "educ-ecole"
+        ],
+        "tags": [
+          "ruralite"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 10,
@@ -2328,7 +2448,12 @@
         "abstention": 11,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-entreprises"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 10,
@@ -2440,7 +2565,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-penal"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -2552,7 +2682,12 @@
         "abstention": 12,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-elus"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 6,
@@ -2664,7 +2799,12 @@
         "abstention": 27,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "ecolo-climat"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -2776,7 +2916,12 @@
         "abstention": 9,
         "nonVotants": 0
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-fiscalite"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -2888,7 +3033,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-elections"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 10,
@@ -3000,7 +3150,12 @@
         "abstention": 25,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-justice"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 6,
@@ -3112,7 +3267,13 @@
         "abstention": 0,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "def-armees",
+          "educ-ecole"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 4,
@@ -3224,7 +3385,12 @@
         "abstention": 2,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "sante-systeme"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -3336,7 +3502,13 @@
         "abstention": 11,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "ecolo-climat",
+          "inst-elus"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 6,
@@ -3448,7 +3620,12 @@
         "abstention": 5,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-budget"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 5,
@@ -3560,7 +3737,14 @@
         "abstention": 0,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-culture"
+        ],
+        "tags": [
+          "numerique"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -3672,7 +3856,12 @@
         "abstention": 0,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-justice"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 8,
@@ -3784,7 +3973,15 @@
         "abstention": 0,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "agri-exercice",
+          "ecolo-climat"
+        ],
+        "tags": [
+          "ruralite"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -3893,7 +4090,12 @@
         "abstention": 0,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 4,
@@ -4002,7 +4204,12 @@
         "abstention": 37,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "sante-finvie"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -4111,7 +4318,12 @@
         "abstention": 69,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "sante-finvie"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -4220,7 +4432,12 @@
         "abstention": 0,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 4,
@@ -4329,7 +4546,14 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "sante-systeme"
+        ],
+        "tags": [
+          "europe-international"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -4438,7 +4662,14 @@
         "abstention": 5,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-ordre"
+        ],
+        "tags": [
+          "numerique"
+        ]
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -4547,7 +4778,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "log-urbanisme"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 10,
@@ -4656,7 +4892,13 @@
         "abstention": 2,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "educ-ecole",
+          "agri-alimentation"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -4765,7 +5007,12 @@
         "abstention": 133,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-ordre"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 5,
@@ -4874,7 +5121,12 @@
         "abstention": 12,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "ecolo-energie"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -4983,7 +5235,12 @@
         "abstention": 19,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "def-evenements"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -5092,7 +5349,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 4,
@@ -5201,7 +5463,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -5310,7 +5577,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "educ-enfance"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -5419,7 +5691,12 @@
         "abstention": 17,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "sante-acces"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -5528,7 +5805,13 @@
         "abstention": 0,
         "nonVotants": 3
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-memoire",
+          "def-armees"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 10,
@@ -5637,7 +5920,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "log-urbanisme"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -5746,7 +6034,14 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-memoire"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -5855,7 +6150,13 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-justice",
+          "educ-enfance"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -5964,7 +6265,12 @@
         "abstention": 1,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-droits"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -6073,7 +6379,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -6182,7 +6493,12 @@
         "abstention": 23,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "trav-emploi"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -6291,7 +6607,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 4,
@@ -6400,7 +6721,14 @@
         "abstention": 6,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "educ-numerique"
+        ],
+        "tags": [
+          "numerique"
+        ]
+      },
       "discriminance": {
         "clivant": true,
         "pour": 10,
@@ -6509,7 +6837,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 4,
@@ -6618,7 +6951,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -6727,7 +7065,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 6,
@@ -6836,7 +7179,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 4,
@@ -6945,7 +7293,12 @@
         "abstention": 18,
         "nonVotants": 0
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "def-evenements"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -7054,7 +7407,12 @@
         "abstention": 11,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "log-construction"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 5,
@@ -7163,7 +7521,12 @@
         "abstention": 62,
         "nonVotants": 0
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-budget"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -7272,7 +7635,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-memoire"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -7381,7 +7749,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-memoire"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -7490,7 +7863,12 @@
         "abstention": 90,
         "nonVotants": 0
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "trav-secu"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 5,
@@ -7599,7 +7977,12 @@
         "abstention": 2,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "immig-sejour"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 4,
@@ -7708,7 +8091,12 @@
         "abstention": 4,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "log-loyers"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 5,
@@ -7817,7 +8205,14 @@
         "abstention": 13,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-entreprises"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 6,
@@ -7926,7 +8321,12 @@
         "abstention": 1,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "educ-enfance"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -8035,7 +8435,12 @@
         "abstention": 20,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "trav-fonctionpublique"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -8144,7 +8549,12 @@
         "abstention": 2,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "immig-mineurs"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 4,
@@ -8253,7 +8663,14 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-territoires"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -8362,7 +8779,12 @@
         "abstention": 93,
         "nonVotants": 0
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "trav-secu"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 5,
@@ -8471,7 +8893,12 @@
         "abstention": 22,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-elus"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -8580,7 +9007,12 @@
         "abstention": 84,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-budget"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 6,
@@ -8689,7 +9121,12 @@
         "abstention": 42,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-industrie"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 4,
@@ -8798,7 +9235,14 @@
         "abstention": 51,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-droits"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 5,
@@ -8907,7 +9351,12 @@
         "abstention": 82,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-budget"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 4,
@@ -9016,7 +9465,12 @@
         "abstention": 8,
         "nonVotants": 15
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "agri-alimentation"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 4,
@@ -9125,7 +9579,15 @@
         "abstention": 9,
         "nonVotants": 13
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-territoires",
+          "inst-elections"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -9234,7 +9696,12 @@
         "abstention": 5,
         "nonVotants": 15
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-penal"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -9343,7 +9810,12 @@
         "abstention": 0,
         "nonVotants": 14
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -9452,7 +9924,12 @@
         "abstention": 0,
         "nonVotants": 14
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 4,
@@ -9561,7 +10038,12 @@
         "abstention": 52,
         "nonVotants": 14
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "log-urbanisme"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -9670,7 +10152,12 @@
         "abstention": 8,
         "nonVotants": 14
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "trav-emploi"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -9779,7 +10266,12 @@
         "abstention": 2,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-elections"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 5,
@@ -9888,7 +10380,12 @@
         "abstention": 36,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-elus"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -9997,7 +10494,14 @@
         "abstention": 62,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-territoires"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -10106,7 +10610,14 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-territoires"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -10215,7 +10726,12 @@
         "abstention": 1,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-penal"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -10324,7 +10840,12 @@
         "abstention": 25,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "agri-exercice"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -10433,7 +10954,12 @@
         "abstention": 2,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-elections"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 6,
@@ -10542,7 +11068,12 @@
         "abstention": 3,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "trav-emploi"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -10651,7 +11182,13 @@
         "abstention": 7,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-discriminations",
+          "educ-ecole"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -10760,7 +11297,15 @@
         "abstention": 1,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-entreprises",
+          "inst-territoires"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 9,
@@ -10869,7 +11414,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 5,
@@ -10978,7 +11528,14 @@
         "abstention": 64,
         "nonVotants": 0
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-territoires"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -11087,7 +11644,14 @@
         "abstention": 3,
         "nonVotants": 0
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-territoires"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -11196,7 +11760,12 @@
         "abstention": 23,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "sante-systeme"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -11305,7 +11874,13 @@
         "abstention": 47,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "ecolo-energie",
+          "ecolo-climat"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 2,
@@ -11414,7 +11989,15 @@
         "abstention": 40,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "def-diplomatie",
+          "ecolo-biodiversite"
+        ],
+        "tags": [
+          "europe-international"
+        ]
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -11523,7 +12106,12 @@
         "abstention": 21,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-entreprises"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 7,
@@ -11632,7 +12220,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "sante-systeme"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -11741,7 +12334,14 @@
         "abstention": 3,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "log-loyers"
+        ],
+        "tags": [
+          "outre-mer"
+        ]
+      },
       "discriminance": {
         "clivant": false,
         "pour": 11,
@@ -11850,7 +12450,12 @@
         "abstention": 5,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "trav-famille"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 8,
@@ -11959,7 +12564,12 @@
         "abstention": 2,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-elections"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 6,
@@ -12068,7 +12678,12 @@
         "abstention": 8,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "trav-emploi"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 9,
@@ -12177,7 +12792,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "inst-gouvernement"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 4,
@@ -12286,7 +12906,12 @@
         "abstention": 0,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "log-construction"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -12395,7 +13020,12 @@
         "abstention": 3,
         "nonVotants": 2
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "secu-penal"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": true,
         "pour": 11,
@@ -12504,7 +13134,12 @@
         "abstention": 1,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "lib-memoire"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
@@ -12613,7 +13248,12 @@
         "abstention": 0,
         "nonVotants": 1
       },
-      "themes": [],
+      "themes": {
+        "subthemes": [
+          "eco-fiscalite"
+        ],
+        "tags": []
+      },
       "discriminance": {
         "clivant": false,
         "pour": 12,
