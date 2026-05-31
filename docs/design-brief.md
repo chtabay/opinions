@@ -71,16 +71,20 @@ incarner cette honnêteté intellectuelle.
 - Actions de réponse : **Pour / Contre / Abstention**, plus **Passer**. Design
   des boutons neutre (ne pas suggérer la « bonne » réponse).
 - **NOUVEAU — un bloc « contexte / pour décider »**, sous la question, conçu avec
-  soin :
-  - **Avant de répondre** : un résumé neutre et court de l'enjeu (de quoi parle
-    le texte), sans révéler comment le vote a réellement tourné — pour **éviter le
-    biais d'ancrage**. Pensé comme un panneau **dépliable** (« En savoir plus »)
-    pour ne pas surcharger.
+  soin. **Principe : on informe, on n'oriente pas.** On n'ajoute AUCUN résumé ni
+  argument rédigé par la plateforme (cela introduirait notre propre biais) ; on
+  s'appuie uniquement sur le **matériau officiel**.
+  - **Avant de répondre** : seulement des éléments factuels et neutres —
+    l'intitulé officiel du texte, ses **étiquettes de thème**, et éventuellement
+    un lien discret pour **aller lire le texte / le dossier** à la source. On NE
+    révèle PAS comment le vote a réellement tourné, pour **éviter le biais
+    d'ancrage**. Bloc **dépliable** pour ne pas surcharger.
   - **Après avoir répondu** : on révèle alors le **résultat réel** (adopté /
-    rejeté, décompte pour/contre/abstention) et un **lien vers la source
-    officielle** (la page d'analyse du scrutin sur assemblée-nationale.fr).
-  - Prévois donc deux états visuels de ce bloc : *avant réponse* (aide à décider,
-    neutre) et *après réponse* (révélation + approfondissement + source).
+    rejeté, décompte pour/contre/abstention) et un **lien vers l'analyse
+    officielle du scrutin** (assemblée-nationale.fr, vote par groupe et par
+    député).
+  - Prévois donc deux états visuels de ce bloc : *avant réponse* (informer sans
+    orienter) et *après réponse* (révélation + approfondissement + source).
 
 **3. Résultats**
 - Phrase de synthèse : « Vous êtes le plus proche de [Groupe] ».
