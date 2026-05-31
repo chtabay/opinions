@@ -153,6 +153,41 @@ l'affichant explicitement « Estimation IA — non sourcée ». Garde-fous :
 - Réponses **bornées** : pas de point, des fourchettes ; refus assumé quand
   l'incertitude est trop grande.
 
+## 8 bis. Boucle d'interaction — inspiration *Pax Historia* (forme oui, épistémique inversée)
+
+*Pax Historia* (jeu de grande stratégie piloté par IA) offre une boucle
+d'interaction remarquable, qu'on peut **emprunter dans sa forme** — à condition
+d'**inverser son rapport à la vérité**.
+
+**Ce qu'on emprunte (la forme) :**
+- **La « pause décisionnelle » + bond temporel** : le joueur décide « temps
+  figé », puis fait **avancer le temps** (3 ans, 10 ans…) et **voit les
+  conséquences se dérouler**, racontées. C'est *exactement* notre multi-horizons
+  (§ design-brief) rendu vivant : décider → avancer → constater.
+- **La gouvernance en langage naturel** : exprimer une politique en texte libre
+  plutôt que par curseurs seuls (l'IA traduit vers les leviers du moteur).
+- **La transparence du modèle** : afficher quel modèle/coût tourne (Pax laisse
+  choisir parmi 28+ modèles) — cohérent avec notre exigence de transparence.
+
+**Ce qu'on REFUSE (l'épistémique) :**
+- Dans Pax, **l'IA invente les conséquences** pour l'engagement ; « aucune
+  partie ne se ressemble » est une *qualité*. Pour nous, c'est **rédhibitoire** :
+  ce serait la fiction autoritaire qu'on combat.
+- Donc on garde la boucle, mais les conséquences viennent du **moteur ancré**
+  (couches 1-2) ; l'IA **narre, explique et cite** — elle n'**invente jamais** un
+  chiffre. Le « bond temporel » dévoile des effets **sourcés, en fourchettes**,
+  pas une histoire lisse et confiante.
+- La narration doit **montrer l'incertitude et le désaccord** (fourchettes,
+  études rivales), sinon elle redevient l'oracle qu'on rejette.
+
+**Formule :** *Pax Historia pour la fiction émergente ; Arbitrages pour la
+lucidité ancrée — même boucle délicieuse, engagement de vérité opposé.*
+
+**Caveat technique :** Pax sérialise tout l'état du monde dans le prompt à chaque
+tour → **coût en tokens qui explose** avec la complexité. Notre boucle doit
+garder un **état compact** et ne solliciter l'IA que pour la narration/explication
+au-dessus d'un moteur déterministe (le gros du calcul hors-LLM).
+
 ## 9. Sources (vérifiées, mai 2026)
 
 **Moteur (couche 1)**
