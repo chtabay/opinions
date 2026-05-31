@@ -1,0 +1,185 @@
+/* opinions.css — « Opinions » / GlobéNostra
+   Tokens fidèles à la maquette Claude Design (handoff). Une SEULE couleur
+   d'accent (bleu ardoise) pour tous les groupes : neutralité politique assumée.
+   Adapté de project/app/tokens.css. Les styles sont portés sur le wrapper
+   .stage (et non sur body) pour ne pas dépendre du reset global de Chakra. */
+
+:root {
+  /* — Accent : bleu ardoise (échelle 50→900) — */
+  --accent-50: #eef2f7;
+  --accent-100: #d6e0ec;
+  --accent-200: #b1c3d8;
+  --accent-300: #87a1bf;
+  --accent-400: #5f7fa2;
+  --accent-500: #3d5a80; /* primaire */
+  --accent-600: #324b6b;
+  --accent-700: #283c55;
+  --accent-800: #1f2e41;
+  --accent-900: #16202e;
+
+  /* — Neutres (gris ardoisé, façon Chakra gray) — */
+  --gray-50: #f7f8fa;
+  --gray-100: #eef0f3;
+  --gray-200: #e1e5ea;
+  --gray-300: #cdd3da;
+  --gray-400: #a4adb8;
+  --gray-500: #79828e;
+  --gray-600: #586069;
+  --gray-700: #3f464e;
+  --gray-800: #282d33;
+  --gray-900: #181b1f;
+
+  /* — Sémantiques — */
+  --bg-page: #e9edf2;
+  --bg-surface: #ffffff;
+  --bg-subtle: var(--gray-50);
+  --bg-muted: var(--gray-100);
+  --border: var(--gray-200);
+  --border-strong: var(--gray-300);
+  --text: var(--gray-900);
+  --text-muted: var(--gray-600);
+  --text-subtle: var(--gray-500);
+  --accent: var(--accent-500);
+  --accent-fg: #ffffff;
+
+  /* États de résultat (neutres, jamais partisans) */
+  --pos-adopte: #2f6f5e;
+  --pos-rejete: #9a5b4a;
+
+  /* — Typo — */
+  --font: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-md: 0.9375rem;
+  --fs-lg: 1.0625rem;
+  --fs-xl: 1.3125rem;
+  --fs-2xl: 1.625rem;
+  --fs-3xl: 2rem;
+
+  /* — Rayons — */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-full: 999px;
+
+  /* — Ombres — */
+  --sh-sm: 0 1px 2px rgba(24, 27, 31, 0.06), 0 1px 3px rgba(24, 27, 31, 0.04);
+  --sh-md: 0 2px 6px rgba(24, 27, 31, 0.06), 0 6px 16px rgba(24, 27, 31, 0.06);
+  --sh-lg: 0 8px 30px rgba(24, 27, 31, 0.1);
+
+  /* — Espacements (échelle 4px) — */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+}
+
+/* — Cadre application (mobile-first, centré). Styles portés ici plutôt que sur
+     body pour rester indépendant du reset global de Chakra. — */
+.stage {
+  min-height: 100dvh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(0px, 4vw, 40px);
+  background: var(--bg-page);
+  font-family: var(--font);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.stage *,
+.stage *::before,
+.stage *::after {
+  box-sizing: border-box;
+}
+.stage button {
+  font-family: inherit;
+}
+.stage a {
+  color: var(--accent-600);
+}
+
+.device {
+  width: 100%;
+  max-width: 448px;
+  background: var(--bg-surface);
+  border-radius: clamp(0px, 4vw, 28px);
+  box-shadow: var(--sh-lg);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+@media (min-width: 520px) {
+  .device {
+    height: min(880px, calc(100dvh - 80px));
+  }
+}
+.device .appbar {
+  flex: 0 0 auto;
+}
+.device .scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+/* barre d'app */
+.appbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+}
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.wordmark b {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  font-size: var(--fs-md);
+}
+.wordmark .sep {
+  color: var(--border-strong);
+}
+.wordmark .mod {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: var(--fs-md);
+}
+
+/* zone scrollable interne */
+.screen {
+  padding: var(--sp-6) var(--sp-5) var(--sp-8);
+}
+
+/* utilitaires */
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text-subtle);
+}
+
+/* focus visible AA */
+.stage :focus-visible {
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}

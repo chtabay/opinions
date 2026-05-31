@@ -25,6 +25,7 @@ dist-ssr
 # (public/data/*.json) est committé.
 _data_explore/
 _scaffold/
+_design/
 scripts/.cache/
 .DS_Store
 *.suo

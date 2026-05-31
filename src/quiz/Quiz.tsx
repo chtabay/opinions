@@ -1,422 +1,437 @@
-import { useEffect, useMemo, useState } from 'react'
-import {
-  Badge,
-  Box,
-  Button,
-  Container,
-  Heading,
-  HStack,
-  Link,
-  Spinner,
-  Stack,
-  Text,
-  Wrap,
-} from '@chakra-ui/react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import './opinions.css'
 import type { Answer, Dataset, Scrutin, Taxonomy } from './types'
 import { balancedSample, loadData, scoreAgreement } from './dataset'
+import { Badge, Button, ChoiceButton, CountBar, Disclosure, GroupBar, Icon, Mark, Progress } from './ui'
 
-type Phase = 'intro' | 'quiz' | 'results'
+type Phase = 'intro' | 'question' | 'results'
 
-const AN_SCRUTIN = (numero: number) =>
-  `https://www.assemblee-nationale.fr/dyn/17/scrutins/${numero}`
-const AN_DOSSIER = (ref: string) =>
-  `https://www.assemblee-nationale.fr/dyn/17/dossiers/${ref}`
+const AN_SCRUTIN = (numero: number) => `https://www.assemblee-nationale.fr/dyn/17/scrutins/${numero}`
+const AN_DOSSIER = (ref: string) => `https://www.assemblee-nationale.fr/dyn/17/dossiers/${ref}`
 
-/** Rend un titre de scrutin lisible comme question. */
+const NATURE_HINT: Record<string, string> = {
+  "Vote sur l'ensemble": "Vote final sur l'adoption ou non d'un texte de loi.",
+  'Motion de censure': 'Vote pouvant renverser le Gouvernement (seules les voix « pour » comptent).',
+}
+
+const MOIS = [
+  'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+  'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
+]
+function formatDate(iso: string): string {
+  const d = new Date(iso + 'T00:00:00')
+  return `${d.getDate()} ${MOIS[d.getMonth()]} ${d.getFullYear()}`
+}
+
+function nature(s: Scrutin): string {
+  return s.category === 'motion' ? 'Motion de censure' : "Vote sur l'ensemble"
+}
+function clivLabel(s: Scrutin): string {
+  return s.discriminance.clivant ? 'Vote clivant' : 'Vote consensuel'
+}
+/** Titre lisible : retire le préfixe « l'ensemble de la… ». */
 function cleanTitle(s: Scrutin): string {
   const t = s.title.replace(/^l['’]ensemble (de la |du |de l['’]|des )?/i, '').trim()
   return t.charAt(0).toUpperCase() + t.slice(1)
 }
 
+const CHOICES = [
+  { key: 'pour', label: 'Pour', icon: 'check' },
+  { key: 'contre', label: 'Contre', icon: 'x' },
+  { key: 'abstention', label: 'Abstention', icon: 'minus' },
+  { key: 'passer', label: 'Passer', icon: 'skip' },
+]
+
 export function Quiz() {
-  const [phase, setPhase] = useState<Phase>('intro')
   const [data, setData] = useState<{ dataset: Dataset; taxonomy: Taxonomy } | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [phase, setPhase] = useState<Phase>('intro')
+  const [idx, setIdx] = useState(0)
   const [answers, setAnswers] = useState<Record<string, Answer>>({})
-  const [index, setIndex] = useState(0)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    loadData()
-      .then(setData)
-      .catch((e) => setError(String(e)))
+    loadData().then(setData).catch((e) => setError(String(e)))
   }, [])
 
   const sample = useMemo(
     () => (data ? balancedSample(data.dataset, data.taxonomy, 2) : []),
     [data],
   )
-
-  // Sous-thème (id) → libellé, pour afficher les thèmes d'un scrutin.
   const subLabel = useMemo(() => {
     const m = new Map<string, string>()
     if (data) for (const t of data.taxonomy.themes) for (const s of t.subthemes) m.set(s.id, s.label)
     return m
   }, [data])
 
-  if (error) {
-    return (
-      <Centered>
-        <Text color="red.500">Erreur de chargement des données : {error}</Text>
-      </Centered>
-    )
+  const total = sample.length
+
+  function resetScroll() {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0
   }
-  if (!data) {
-    return (
-      <Centered>
-        <Spinner size="lg" color="teal.500" />
-      </Centered>
-    )
+  function start() {
+    setAnswers({})
+    setIdx(0)
+    setPhase('question')
+    resetScroll()
+  }
+  function answerCurrent(choice: Answer) {
+    const v = sample[idx]
+    setAnswers((a) => ({ ...a, [v.uid]: choice }))
+  }
+  function next() {
+    if (idx + 1 >= total) setPhase('results')
+    else setIdx(idx + 1)
+    resetScroll()
+  }
+  function restart() {
+    setAnswers({})
+    setIdx(0)
+    setPhase('intro')
+    resetScroll()
   }
 
-  function recordAnswer(uid: string, a: Answer) {
-    setAnswers((prev) => ({ ...prev, [uid]: a }))
-  }
-  function goNext() {
-    if (index + 1 < sample.length) setIndex(index + 1)
-    else setPhase('results')
-  }
-
-  if (phase === 'intro') {
-    return (
-      <Intro
-        count={sample.length}
-        meta={data.dataset.meta}
-        onStart={() => {
-          setAnswers({})
-          setIndex(0)
-          setPhase('quiz')
-        }}
-      />
-    )
-  }
-
-  if (phase === 'quiz') {
-    const scrutin = sample[index]
-    const themeLabels = scrutin.themes.subthemes.map((id) => subLabel.get(id) ?? id)
-    return (
-      <Question
-        key={scrutin.uid}
-        scrutin={scrutin}
-        themeLabels={themeLabels}
-        index={index}
-        total={sample.length}
-        onAnswer={(a) => recordAnswer(scrutin.uid, a)}
-        onNext={goNext}
-        onBack={index > 0 ? () => setIndex(index - 1) : undefined}
-      />
-    )
-  }
+  const ranking = useMemo(() => {
+    if (!data) return []
+    return scoreAgreement(sample, answers, data.dataset.groups).map((r) => ({
+      sigle: r.group.abbrev,
+      nom: r.group.name,
+      pct: r.pct ?? 0,
+    }))
+  }, [data, sample, answers])
+  const comparedCount = sample.filter((s) => answers[s.uid] && answers[s.uid] !== 'passer').length
 
   return (
-    <Results
-      sample={sample}
-      answers={answers}
-      dataset={data.dataset}
-      onRestart={() => setPhase('intro')}
-    />
+    <div className="stage">
+      <div className="device" data-density="standard">
+        <div className="appbar">
+          <div className="wordmark">
+            <Mark size={22} />
+            <b>GlobéNostra</b>
+            <span className="sep">/</span>
+            <span className="mod">Opinions</span>
+          </div>
+          {phase === 'question' && total > 0 && (
+            <span style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-subtle)', fontWeight: 600, fontVariantNumeric: 'tabular-nums' }}>
+              {idx + 1}/{total}
+            </span>
+          )}
+        </div>
+
+        <div ref={scrollRef} className="scroll">
+          {error && (
+            <div className="screen">
+              <p style={{ color: 'var(--pos-rejete)' }}>Erreur de chargement des données : {error}</p>
+            </div>
+          )}
+          {!error && !data && (
+            <div className="screen">
+              <p className="eyebrow">Chargement…</p>
+            </div>
+          )}
+          {data && phase === 'intro' && <IntroScreen onStart={start} total={total} window={data.dataset.meta.windowMonths} />}
+          {data && phase === 'question' && (
+            <QuestionScreen
+              key={sample[idx].uid}
+              vote={sample[idx]}
+              index={idx + 1}
+              total={total}
+              answer={answers[sample[idx].uid]}
+              themeLabels={sample[idx].themes.subthemes.map((id) => subLabel.get(id) ?? id)}
+              groups={data.dataset.groups}
+              onAnswer={answerCurrent}
+              onNext={next}
+            />
+          )}
+          {data && phase === 'results' && (
+            <ResultsScreen ranking={ranking} compared={comparedCount} onRestart={restart} />
+          )}
+        </div>
+      </div>
+    </div>
   )
 }
 
-function Centered({ children }: { children: React.ReactNode }) {
+/* ————————————————————————————— INTRO ————————————————————————————— */
+function IntroScreen({ onStart, total, window: months }: { onStart: () => void; total: number; window: number }) {
   return (
-    <Box minH="100dvh" bg="gray.50" display="flex" alignItems="center" justifyContent="center">
-      {children}
-    </Box>
+    <div className="screen">
+      <p className="eyebrow" style={{ marginBottom: 14 }}>Atelier de lucidité politique</p>
+      <h1 style={{ margin: '0 0 14px', fontSize: 'var(--fs-3xl)', lineHeight: 1.12, letterSpacing: '-.02em', fontWeight: 800, textWrap: 'balance' }}>
+        Et vous, vous auriez voté comment ?
+      </h1>
+      <p style={{ margin: '0 0 22px', fontSize: 'var(--fs-lg)', lineHeight: 1.5, color: 'var(--text-muted)', textWrap: 'pretty' }}>
+        {total} vrais votes de l'Assemblée nationale, choisis parmi les {months} derniers mois. Répondez, puis découvrez de quels
+        groupes parlementaires vos réponses se rapprochent.
+      </p>
+
+      <div style={{ display: 'flex', gap: 12, padding: '16px 16px', background: 'var(--accent-50)', border: '1px solid var(--accent-100)', borderRadius: 'var(--r-lg)', marginBottom: 18 }}>
+        <span style={{ color: 'var(--accent-600)', flexShrink: 0, marginTop: 1 }}>
+          <Icon name="scale" size={22} />
+        </span>
+        <div>
+          <p style={{ margin: '0 0 6px', fontWeight: 700, fontSize: 'var(--fs-md)', color: 'var(--accent-800)' }}>
+            Le score n'est qu'une porte d'entrée.
+          </p>
+          <p style={{ margin: 0, fontSize: 'var(--fs-sm)', lineHeight: 1.55, color: 'var(--accent-800)', opacity: 0.9 }}>
+            Ce genre d'outil simplifie. Un vote dépend du contexte, de la discipline de groupe, de compromis. « Se rapprocher »
+            d'un groupe n'est pas « être d'accord » avec lui. Ici, le but est de comprendre ces biais et d'approfondir — pas de
+            vous ranger dans une case.
+          </p>
+        </div>
+      </div>
+
+      <ul style={{ listStyle: 'none', margin: '0 0 26px', padding: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {([
+          ['eye', "Le résultat réel d'un vote ne s'affiche qu'après votre réponse."],
+          ['lock', 'Anonyme. Aucune réponse n\'est conservée ni transmise.'],
+          ['external', 'Chaque vote renvoie à son scrutin officiel sur assemblée-nationale.fr.'],
+        ] as const).map(([ic, txt]) => (
+          <li key={ic} style={{ display: 'flex', gap: 11, alignItems: 'flex-start', fontSize: 'var(--fs-sm)', color: 'var(--text-muted)', lineHeight: 1.45 }}>
+            <span style={{ color: 'var(--text-subtle)', marginTop: 1, flexShrink: 0 }}>
+              <Icon name={ic} size={17} />
+            </span>
+            {txt}
+          </li>
+        ))}
+      </ul>
+
+      <Button size="lg" full onClick={onStart} iconRight="arrow">Commencer</Button>
+      <p style={{ textAlign: 'center', marginTop: 12, fontSize: 'var(--fs-xs)', color: 'var(--text-subtle)' }}>
+        Environ 3 minutes · {total} votes · sans inscription
+      </p>
+    </div>
   )
 }
 
-function Shell({ children }: { children: React.ReactNode }) {
-  return (
-    <Box minH="100dvh" bg="gray.50" color="gray.900">
-      <Container maxW="2xl" py={{ base: 10, md: 16 }}>
-        {children}
-      </Container>
-    </Box>
-  )
-}
-
-function Intro({
-  count,
-  meta,
-  onStart,
-}: {
-  count: number
-  meta: Dataset['meta']
-  onStart: () => void
-}) {
-  return (
-    <Shell>
-      <Stack gap={6}>
-        <Badge alignSelf="flex-start" colorPalette="teal" size="lg">
-          Exercice A · votes de l'Assemblée
-        </Badge>
-        <Heading size={{ base: '2xl', md: '3xl' }} lineHeight="1.1">
-          Et vous, vous auriez voté comment ?
-        </Heading>
-        <Text color="gray.600" fontSize="lg">
-          {count} votes réels de l'Assemblée nationale, sur les {meta.windowMonths}{' '}
-          derniers mois. Pour chacun, indiquez ce que vous auriez voté. On
-          regardera ensuite de quel groupe vos réponses se rapprochent.
-        </Text>
-        <Box bg="orange.50" borderWidth="1px" borderColor="orange.200" borderRadius="lg" p={4}>
-          <Text fontSize="sm" color="orange.900">
-            <strong>À garder en tête.</strong> Un score de proximité compare votre
-            réponse à la <em>ligne majoritaire</em> de chaque groupe — pas à la
-            conviction de chaque député. Et un même « contre » peut avoir des sens
-            opposés selon le contexte. Ce score est un point de départ pour
-            comprendre, pas un verdict sur vous.
-          </Text>
-        </Box>
-        <Button colorPalette="teal" size="lg" alignSelf="flex-start" onClick={onStart}>
-          Commencer
-        </Button>
-      </Stack>
-    </Shell>
-  )
-}
-
-function Question({
-  scrutin,
-  themeLabels,
+/* —————————————————————— CARTE-QUESTION (2 états) —————————————————————— */
+function QuestionScreen({
+  vote,
   index,
   total,
+  answer,
+  themeLabels,
+  groups,
   onAnswer,
   onNext,
-  onBack,
 }: {
-  scrutin: Scrutin
-  themeLabels: string[]
+  vote: Scrutin
   index: number
   total: number
+  answer: Answer | undefined
+  themeLabels: string[]
+  groups: Dataset['groups']
   onAnswer: (a: Answer) => void
   onNext: () => void
-  onBack?: () => void
 }) {
-  const [chosen, setChosen] = useState<Answer | null>(null)
-  const isMotion = scrutin.category === 'motion'
-  const pct = Math.round(((index + 1) / total) * 100)
-
-  function pick(a: Answer) {
-    setChosen(a)
-    onAnswer(a)
-  }
+  const [ctxOpen, setCtxOpen] = useState(false)
+  const [groupsOpen, setGroupsOpen] = useState(false)
+  const answered = !!answer
+  const nat = nature(vote)
+  const dec = vote.synthese
+  const decTotal = dec.pour + dec.contre + dec.abstention
 
   return (
-    <Shell>
-      <Stack gap={6}>
-        <Box>
-          <HStack justify="space-between" mb={2}>
-            <Text fontSize="sm" color="gray.500">
-              Question {index + 1} / {total}
-            </Text>
-            <Text fontSize="sm" color="gray.500">
-              {new Date(scrutin.date).toLocaleDateString('fr-FR')}
-            </Text>
-          </HStack>
-          <Box bg="gray.200" borderRadius="full" h="6px" overflow="hidden">
-            <Box bg="teal.500" h="100%" w={`${pct}%`} transition="width 0.2s" />
-          </Box>
-        </Box>
+    <div className="screen" style={{ paddingTop: 'var(--sp-5)' }}>
+      <Progress index={index} total={total} />
 
-        <Box>
-          <Text fontSize="sm" fontWeight="bold" color="teal.600" mb={1}>
-            {isMotion ? 'Motion de censure' : 'Vote sur l’ensemble du texte'}
-          </Text>
-          <Heading size={{ base: 'lg', md: 'xl' }} lineHeight="1.25">
-            {cleanTitle(scrutin)}
-          </Heading>
-          {isMotion && (
-            <Text fontSize="sm" color="gray.500" mt={2}>
-              Voter « pour » une motion de censure, c'est chercher à renverser le
-              gouvernement.
-            </Text>
-          )}
-        </Box>
+      <div style={{ marginTop: 22 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 14 }}>
+          <Badge tone="accent" variant="subtle">{nat}</Badge>
+          <Badge tone="neutral" variant="outline">{formatDate(vote.date)}</Badge>
+          <Badge tone="neutral" variant="outline">{clivLabel(vote)}</Badge>
+        </div>
 
-        {/* Contexte AVANT réponse : informer sans orienter (thèmes + lien texte),
-            sans révéler comment le vote a réellement tourné. */}
+        <p style={{ margin: '0 0 4px', fontSize: 'var(--fs-xs)', color: 'var(--text-subtle)' }}>{NATURE_HINT[nat]}</p>
+
+        <h2 style={{ margin: '6px 0 14px', fontSize: 'var(--fs-2xl)', lineHeight: 1.18, letterSpacing: '-.015em', fontWeight: 800, textWrap: 'balance' }}>
+          {cleanTitle(vote)}
+        </h2>
+
         {themeLabels.length > 0 && (
-          <Wrap gap={2}>
-            {themeLabels.map((l) => (
-              <Badge key={l} colorPalette="gray" variant="subtle">
-                {l}
-              </Badge>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginBottom: 18 }}>
+            {themeLabels.map((t) => (
+              <span key={t} style={{ fontSize: 'var(--fs-xs)', fontWeight: 600, color: 'var(--text-muted)', background: 'var(--bg-muted)', padding: '4px 10px', borderRadius: 'var(--r-full)' }}>
+                {t}
+              </span>
             ))}
-          </Wrap>
+          </div>
         )}
-        {!chosen && scrutin.dossier?.ref && (
-          <Link
-            href={AN_DOSSIER(scrutin.dossier.ref)}
-            color="teal.600"
-            fontSize="sm"
+      </div>
+
+      {/* Contexte « pour décider » — matériel officiel uniquement (on informe, on n'oriente pas) */}
+      <div style={{ marginBottom: 18 }}>
+        <Disclosure open={ctxOpen} onToggle={() => setCtxOpen(!ctxOpen)} icon="info" summary="Contexte — pour décider">
+          <p style={{ margin: 0 }}>{NATURE_HINT[nat]}</p>
+          {vote.dossier?.ref && (
+            <p style={{ margin: '10px 0 0' }}>
+              <a href={AN_DOSSIER(vote.dossier.ref)} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontWeight: 600, textDecoration: 'none' }}>
+                Lire le texte (dossier législatif) <Icon name="external" size={14} />
+              </a>
+            </p>
+          )}
+          {!answered && (
+            <p style={{ margin: '10px 0 0', fontSize: 'var(--fs-sm)', color: 'var(--text-subtle)', fontStyle: 'italic' }}>
+              Le résultat réel du vote n'est volontairement pas affiché : à vous de vous décider d'abord.
+            </p>
+          )}
+        </Disclosure>
+      </div>
+
+      {/* CHOIX — neutres */}
+      <div style={{ display: 'grid', gap: 10 }}>
+        {CHOICES.map((c) => (
+          <ChoiceButton
+            key={c.key}
+            choice={c}
+            selected={answer === c.key}
+            disabled={answered}
+            onClick={() => !answered && onAnswer(c.key as Answer)}
+          />
+        ))}
+      </div>
+
+      {/* —— RÉVÉLATION après réponse —— */}
+      {answered && (
+        <div style={{ marginTop: 22, paddingTop: 20, borderTop: '1px solid var(--border)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+            <Badge tone={vote.sort === 'adopté' ? 'adopte' : 'rejete'} variant="subtle">
+              <Icon name={vote.sort === 'adopté' ? 'check' : 'x'} size={14} />
+              Texte {vote.sort}
+            </Badge>
+            <span style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-subtle)' }}>Scrutin n° {vote.numero}</span>
+          </div>
+
+          {nat === 'Motion de censure' ? (
+            <p style={{ margin: '0 0 16px', fontSize: 'var(--fs-md)', lineHeight: 1.55, color: 'var(--text-muted)' }}>
+              <b style={{ color: 'var(--text)' }}>{dec.pour} voix</b> pour la censure — il en fallait 289. Seules les voix « pour »
+              sont décomptées.
+            </p>
+          ) : (
+            <div style={{ display: 'grid', gap: 9, marginBottom: 16 }}>
+              <CountBar label="Pour" value={dec.pour} total={decTotal} />
+              <CountBar label="Contre" value={dec.contre} total={decTotal} />
+              <CountBar label="Abstention" value={dec.abstention} total={decTotal} />
+            </div>
+          )}
+
+          <div style={{ marginBottom: 14 }}>
+            <Disclosure open={groupsOpen} onToggle={() => setGroupsOpen(!groupsOpen)} icon="layers" summary="Comment chaque groupe a voté">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 16px', marginTop: 4 }}>
+                {groups.map((g) => {
+                  const pos = vote.positions[g.ref]?.position
+                  const lbl = pos === 'pour' ? 'Pour' : pos === 'contre' ? 'Contre' : pos === 'abstention' ? 'Abstention' : '—'
+                  return (
+                    <div key={g.ref} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, fontSize: 'var(--fs-sm)', paddingBottom: 6, borderBottom: '1px solid var(--border)' }}>
+                      <span style={{ fontWeight: 700, color: 'var(--text)' }}>{g.abbrev}</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{lbl}</span>
+                    </div>
+                  )
+                })}
+              </div>
+            </Disclosure>
+          </div>
+
+          <a
+            href={AN_SCRUTIN(vote.numero)}
             target="_blank"
             rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontSize: 'var(--fs-sm)', fontWeight: 600, textDecoration: 'none', color: 'var(--accent-600)', marginBottom: 20 }}
           >
-            Lire le texte (dossier législatif) ↗
-          </Link>
-        )}
+            Voir l'analyse du scrutin sur assemblée-nationale.fr
+            <Icon name="external" size={15} />
+          </a>
 
-        {!chosen ? (
-          <Stack gap={3}>
-            <HStack gap={3}>
-              <Button flex={1} colorPalette="green" variant="outline" onClick={() => pick('pour')}>
-                Pour
-              </Button>
-              <Button flex={1} colorPalette="red" variant="outline" onClick={() => pick('contre')}>
-                Contre
-              </Button>
-            </HStack>
-            <HStack gap={3}>
-              <Button flex={1} colorPalette="gray" variant="outline" onClick={() => pick('abstention')}>
-                Abstention
-              </Button>
-              <Button flex={1} colorPalette="gray" variant="ghost" onClick={() => pick('passer')}>
-                Passer
-              </Button>
-            </HStack>
-            {onBack && (
-              <Button variant="plain" size="sm" alignSelf="flex-start" onClick={onBack} color="gray.500">
-                ← Précédent
-              </Button>
-            )}
-          </Stack>
-        ) : (
-          <Reveal scrutin={scrutin} chosen={chosen} onNext={onNext} isLast={index + 1 === total} />
-        )}
-      </Stack>
-    </Shell>
+          <Button size="lg" full onClick={onNext} iconRight="arrow">
+            {index === total ? 'Voir mes résultats' : 'Question suivante'}
+          </Button>
+        </div>
+      )}
+    </div>
   )
 }
 
-/** Bloc révélé APRÈS la réponse : résultat réel + décompte + source officielle. */
-function Reveal({
-  scrutin,
-  chosen,
-  onNext,
-  isLast,
-}: {
-  scrutin: Scrutin
-  chosen: Answer
-  onNext: () => void
-  isLast: boolean
-}) {
-  const adopté = scrutin.sort === 'adopté'
-  const choiceLabel: Record<Answer, string> = {
-    pour: 'Pour',
-    contre: 'Contre',
-    abstention: 'Abstention',
-    passer: 'Passé',
-  }
+/* ————————————————————————————— RÉSULTATS ————————————————————————————— */
+function ComingSoonCard({ icon, title, desc }: { icon: string; title: string; desc: string }) {
   return (
-    <Stack gap={4}>
-      <Text fontSize="sm" color="gray.500">
-        Votre réponse : <strong>{choiceLabel[chosen]}</strong>
-      </Text>
-      <Box bg="white" borderWidth="1px" borderColor="gray.200" borderRadius="lg" p={4}>
-        <HStack justify="space-between" mb={2}>
-          <Text fontWeight="bold" fontSize="sm">
-            Ce qu'a décidé l'Assemblée
-          </Text>
-          <Badge colorPalette={adopté ? 'green' : 'gray'} variant="subtle">
-            {adopté ? 'Adopté' : 'Rejeté'}
-          </Badge>
-        </HStack>
-        <Text fontSize="sm" color="gray.600">
-          Pour {scrutin.synthese.pour} · Contre {scrutin.synthese.contre} ·
-          Abstention {scrutin.synthese.abstention}
-        </Text>
-        <Link
-          href={AN_SCRUTIN(scrutin.numero)}
-          color="teal.600"
-          fontSize="sm"
-          mt={2}
-          display="inline-block"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Voir l'analyse officielle du scrutin (vote par groupe et député) ↗
-        </Link>
-      </Box>
-      <Button colorPalette="teal" alignSelf="flex-start" onClick={onNext}>
-        {isLast ? 'Voir mes résultats' : 'Continuer'}
-      </Button>
-    </Stack>
+    <div style={{ display: 'flex', gap: 12, padding: '14px 15px', background: 'var(--bg-subtle)', border: '1px solid var(--border)', borderRadius: 'var(--r-lg)', opacity: 0.92 }}>
+      <span style={{ color: 'var(--text-subtle)', flexShrink: 0, marginTop: 1 }}>
+        <Icon name={icon} size={20} />
+      </span>
+      <div style={{ flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontWeight: 700, fontSize: 'var(--fs-md)' }}>{title}</span>
+          <Badge tone="neutral" variant="outline">à venir</Badge>
+        </div>
+        <p style={{ margin: '4px 0 0', fontSize: 'var(--fs-sm)', color: 'var(--text-muted)', lineHeight: 1.45 }}>{desc}</p>
+      </div>
+    </div>
   )
 }
 
-function Results({
-  sample,
-  answers,
-  dataset,
+function ResultsScreen({
+  ranking,
+  compared,
   onRestart,
 }: {
-  sample: Scrutin[]
-  answers: Record<string, Answer>
-  dataset: Dataset
+  ranking: { sigle: string; nom: string; pct: number }[]
+  compared: number
   onRestart: () => void
 }) {
-  const scores = useMemo(
-    () => scoreAgreement(sample, answers, dataset.groups),
-    [sample, answers, dataset.groups],
-  )
-  const answeredCount = sample.filter((s) => answers[s.uid] && answers[s.uid] !== 'passer').length
-  const top = scores.find((s) => s.pct !== null)
-
+  const lead = ranking[0]
   return (
-    <Shell>
-      <Stack gap={6}>
-        <Badge alignSelf="flex-start" colorPalette="teal" size="lg">
-          Vos résultats
-        </Badge>
-        <Heading size={{ base: 'xl', md: '2xl' }}>
-          {top ? `Vous êtes le plus proche de ${top.group.abbrev}` : 'Pas assez de réponses'}
-        </Heading>
-        <Text color="gray.600">
-          Sur {answeredCount} votes auxquels vous avez répondu, voici votre taux
-          d'accord avec la ligne majoritaire de chaque groupe.
-        </Text>
+    <div className="screen">
+      <p className="eyebrow" style={{ marginBottom: 12 }}>Vos résultats</p>
 
-        <Stack gap={3}>
-          {scores.map((s) => (
-            <Box key={s.group.ref}>
-              <HStack justify="space-between" mb={1}>
-                <Text fontWeight="medium" fontSize="sm">
-                  {s.group.abbrev}
-                  <Text as="span" color="gray.400" fontWeight="normal">
-                    {' '}— {s.group.name}
-                  </Text>
-                </Text>
-                <Text fontWeight="bold" fontSize="sm" color="gray.700">
-                  {s.pct === null ? '—' : `${s.pct}%`}
-                </Text>
-              </HStack>
-              <Box bg="gray.200" borderRadius="full" h="10px" overflow="hidden">
-                <Box
-                  bg={s === top ? 'teal.500' : 'teal.300'}
-                  h="100%"
-                  w={`${s.pct ?? 0}%`}
-                  transition="width 0.3s"
-                />
-              </Box>
-            </Box>
+      <div style={{ padding: '20px 18px', background: 'var(--accent-500)', borderRadius: 'var(--r-xl)', color: '#fff', marginBottom: 8 }}>
+        <p style={{ margin: '0 0 6px', fontSize: 'var(--fs-sm)', opacity: 0.85, fontWeight: 600 }}>Vos réponses se rapprochent le plus de</p>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' }}>
+          <span style={{ fontSize: 'var(--fs-3xl)', fontWeight: 800, letterSpacing: '-.02em' }}>{lead?.sigle ?? '—'}</span>
+          <span style={{ fontSize: 'var(--fs-xl)', fontWeight: 700, opacity: 0.95 }}>{lead?.pct ?? 0}% d'accord</span>
+        </div>
+        <p style={{ margin: '6px 0 0', fontSize: 'var(--fs-sm)', opacity: 0.85 }}>{lead?.nom ?? ''}</p>
+      </div>
+      <p style={{ margin: '0 0 20px', fontSize: 'var(--fs-xs)', color: 'var(--text-subtle)', textAlign: 'center' }}>
+        Sur {compared} vote{compared > 1 ? 's' : ''} comparé{compared > 1 ? 's' : ''} (les votes « passés » sont exclus).
+      </p>
+
+      <p className="eyebrow" style={{ marginBottom: 6 }}>Proximité par groupe</p>
+      <div style={{ marginBottom: 8 }}>
+        {ranking.map((g, i) => (
+          <GroupBar key={g.sigle} rank={i + 1} sigle={g.sigle} nom={g.nom} pct={g.pct} lead={i === 0} />
+        ))}
+      </div>
+      <p style={{ margin: '4px 0 24px', fontSize: 'var(--fs-xs)', color: 'var(--text-subtle)', lineHeight: 1.5 }}>
+        Même couleur pour tous les groupes : « Opinions » ne code jamais les familles politiques par des couleurs, pour ne pas
+        orienter votre lecture.
+      </p>
+
+      <div style={{ padding: '16px', background: 'var(--accent-50)', border: '1px solid var(--accent-100)', borderRadius: 'var(--r-lg)', marginBottom: 24 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 10 }}>
+          <span style={{ color: 'var(--accent-600)', display: 'flex' }}><Icon name="alert" size={20} /></span>
+          <span style={{ fontWeight: 700, fontSize: 'var(--fs-md)', color: 'var(--accent-800)' }}>Ce que ce score ne dit pas</span>
+        </div>
+        <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'grid', gap: 9 }}>
+          {[
+            'La discipline de groupe : un·e député·e vote souvent avec son groupe, pas forcément selon sa conviction propre.',
+            'Proximité ≠ adhésion : tomber d\'accord sur des votes ne signifie pas partager un programme.',
+            'Le contexte d\'un vote (compromis, calendrier, stratégie) échappe à un simple « pour / contre ».',
+          ].map((t, i) => (
+            <li key={i} style={{ display: 'flex', gap: 9, fontSize: 'var(--fs-sm)', lineHeight: 1.5, color: 'var(--accent-800)' }}>
+              <span style={{ flexShrink: 0, opacity: 0.6 }}>—</span>
+              {t}
+            </li>
           ))}
-        </Stack>
+        </ul>
+      </div>
 
-        <Box bg="orange.50" borderWidth="1px" borderColor="orange.200" borderRadius="lg" p={4}>
-          <Text fontSize="sm" color="orange.900">
-            <strong>Ce que ce score ne dit pas.</strong> Il mesure un accord avec
-            la <em>position de groupe</em>, façonnée par la discipline de vote et
-            les calculs tactiques — pas par les convictions individuelles des
-            député·es. La proximité avec un groupe n'est pas une adhésion à son
-            programme. Prochainement : le détail par thème, et le « démontage »
-            des biais.
-          </Text>
-        </Box>
+      <p className="eyebrow" style={{ marginBottom: 10 }}>Aller plus loin</p>
+      <div style={{ display: 'grid', gap: 10, marginBottom: 26 }}>
+        <ComingSoonCard icon="layers" title="Détail par thème" desc="Voir vos accords et désaccords ventilés par sujet : budget, santé, sécurité…" />
+        <ComingSoonCard icon="scale" title="Démontage des biais" desc="Comprendre, vote par vote, ce que la mécanique du score a pu masquer ou exagérer." />
+      </div>
 
-        <Button colorPalette="teal" variant="outline" alignSelf="flex-start" onClick={onRestart}>
-          Recommencer
-        </Button>
-      </Stack>
-    </Shell>
+      <Button size="lg" full variant="outline" onClick={onRestart}>Recommencer l'atelier</Button>
+    </div>
   )
 }
