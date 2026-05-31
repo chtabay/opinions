@@ -19,6 +19,13 @@ dist-ssr
 
 # Claude Code local settings
 .claude/
+
+# Données brutes d'exploration / archives téléchargées (non versionnées,
+# régénérées par le script d'ingestion). Seul le dataset normalisé
+# (public/data/*.json) est committé.
+_data_explore/
+_scaffold/
+scripts/.cache/
 .DS_Store
 *.suo
 *.ntvs*
