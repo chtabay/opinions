@@ -1,8 +1,8 @@
 /* opinions.css — « Opinions » / GlobéNostra
-   Tokens fidèles à la maquette Claude Design (handoff). Une SEULE couleur
-   d'accent (bleu ardoise) pour tous les groupes : neutralité politique assumée.
-   Adapté de project/app/tokens.css. Les styles sont portés sur le wrapper
-   .stage (et non sur body) pour ne pas dépendre du reset global de Chakra. */
+   Tokens fidèles à la maquette Claude Design (handoff mobile + desktop). Une
+   SEULE couleur d'accent (bleu ardoise) pour tous les groupes : neutralité
+   politique assumée. La base typo/fond est scopée à .opinions-root (et non
+   body) pour rester indépendante du reset global de Chakra. */
 
 :root {
   /* — Accent : bleu ardoise (échelle 50→900) — */
@@ -17,7 +17,7 @@
   --accent-800: #1f2e41;
   --accent-900: #16202e;
 
-  /* — Neutres (gris ardoisé, façon Chakra gray) — */
+  /* — Neutres (gris ardoisé) — */
   --gray-50: #f7f8fa;
   --gray-100: #eef0f3;
   --gray-200: #e1e5ea;
@@ -80,8 +80,31 @@
   --sp-12: 48px;
 }
 
-/* — Cadre application (mobile-first, centré). Styles portés ici plutôt que sur
-     body pour rester indépendant du reset global de Chakra. — */
+/* — Base scopée (indépendante du reset global de Chakra) — */
+.opinions-root {
+  font-family: var(--font);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.opinions-root *,
+.opinions-root *::before,
+.opinions-root *::after {
+  box-sizing: border-box;
+}
+.opinions-root button {
+  font-family: inherit;
+}
+.opinions-root a {
+  color: var(--accent-600);
+}
+.opinions-root :focus-visible {
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* — Cadre application MOBILE (centré) — */
 .stage {
   min-height: 100dvh;
   display: flex;
@@ -89,23 +112,7 @@
   justify-content: center;
   padding: clamp(0px, 4vw, 40px);
   background: var(--bg-page);
-  font-family: var(--font);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
-.stage *,
-.stage *::before,
-.stage *::after {
-  box-sizing: border-box;
-}
-.stage button {
-  font-family: inherit;
-}
-.stage a {
-  color: var(--accent-600);
-}
-
 .device {
   width: 100%;
   max-width: 448px;
@@ -134,7 +141,7 @@
   overscroll-behavior: contain;
 }
 
-/* barre d'app */
+/* barre d'app (mobile) */
 .appbar {
   display: flex;
   align-items: center;
@@ -163,7 +170,7 @@
   font-size: var(--fs-md);
 }
 
-/* zone scrollable interne */
+/* zone scrollable interne (mobile) */
 .screen {
   padding: var(--sp-6) var(--sp-5) var(--sp-8);
 }
@@ -177,9 +184,53 @@
   color: var(--text-subtle);
 }
 
-/* focus visible AA */
-.stage :focus-visible {
-  outline: 2px solid var(--accent-500);
-  outline-offset: 2px;
-  border-radius: var(--r-sm);
+/* ——— Desktop (≥ 960px) ——— */
+.desk-page {
+  min-height: 100dvh;
+  background: var(--bg-page);
+}
+.desk-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+}
+.desk-bar-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 16px clamp(24px, 4vw, 40px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.desk-main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 56px) clamp(24px, 4vw, 40px) 72px;
+}
+.desk-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--sh-sm);
+}
+.desk-intro {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(32px, 4vw, 56px);
+  align-items: center;
+  min-height: calc(100dvh - 220px);
+}
+.desk-q-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.desk-r-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 28px;
+  align-items: start;
 }

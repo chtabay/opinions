@@ -26,6 +26,7 @@ dist-ssr
 _data_explore/
 _scaffold/
 _design/
+_design_desktop/
 scripts/.cache/
 .DS_Store
 *.suo
