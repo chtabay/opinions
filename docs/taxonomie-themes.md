@@ -3,66 +3,113 @@
 > **Statut : BROUILLON soumis à validation.** Rien n'est affecté tant que cette
 > taxonomie n'est pas arrêtée (décision « taxonomie d'abord »).
 
-Cette taxonomie est **dérivée des 115 votes réels** retenus (12 derniers mois),
-pas inventée a priori. Chaque thème est défini par une **frontière** explicite
-pour rendre l'affectation reproductible et discutable.
+Structure retenue : **thèmes de fond à deux niveaux** (thème → sous-thèmes) +
+**étiquettes transversales** qui se combinent librement. Taxonomie **dérivée des
+115 votes réels** des 12 derniers mois.
 
-## Principes proposés
+## Principes
 
-1. **Affectation multiple** : un vote peut porter plusieurs thèmes (ex. la
-   refondation de Mayotte = *Institutions & territoires* + *Économie*).
-2. **Thèmes de fond vs étiquettes transversales** *(point à trancher — voir
-   plus bas)* : certains marqueurs (outre-mer, ruralité, Europe, numérique)
-   traversent plusieurs thèmes. Deux options :
-   - les traiter comme des **thèmes** à part entière ;
-   - les traiter comme des **étiquettes transversales** qui se combinent aux
-     thèmes de fond (recommandé : plus lisible, évite de gonfler la liste).
-3. **Une frontière, pas un mot-clé** : le critère d'appartenance est le *sujet
-   dominant du texte*, pas la présence d'un terme.
+1. **Affectation multiple** : un vote peut porter plusieurs sous-thèmes et
+   plusieurs étiquettes (ex. refondation de Mayotte = *Institutions ▸ Statut des
+   territoires* + *Économie ▸ Budget* + étiquette `outre-mer`).
+2. **Le sous-thème est l'unité d'affectation** ; le thème de niveau 1 est la
+   regroupement d'affichage.
+3. **Critère = sujet dominant du texte**, pas la présence d'un mot.
 
 ---
 
-## Thèmes de fond proposés (11)
+## Thèmes (12) et sous-thèmes (38)
 
-| # | Thème | Frontière (ce qu'il couvre) | Exemples réels |
-|---|-------|------------------------------|----------------|
-| 1 | **Économie, fiscalité & entreprises** | Budget, impôts, fiscalité, simplification économique, entreprises, fraude fiscale, nationalisations | Loi de finances 2025 ; simplification de la vie économique ; nationalisation d'ArcelorMittal ; fraudes sociales et fiscales |
-| 2 | **Travail, emploi & protection sociale** | Droit du travail, emploi, Sécurité sociale, retraites, allocations, agents publics | PLFSS 2026 ; allocations familiales dès le 1ᵉʳ enfant ; accords interprofessionnels emploi ; contrat de professionnalisation |
-| 3 | **Logement & urbanisme** | Loyers, habitat, construction, urbanisme, immobilier | Encadrement des loyers ; rapports locatifs ; transformation bureaux→logements ; mobilisation de l'habitat |
-| 4 | **Écologie, énergie & climat** | Transition énergétique, climat, biodiversité, mer, montagne | Programmation énergie-climat ; hydroélectricité ; adaptation au changement climatique ; montagne vivante |
-| 5 | **Agriculture & alimentation** | Métier agricole, origine des produits, ruralité agricole | Contraintes du métier d'agriculteur ; information sur l'origine des produits ; place des agriculteurs |
-| 6 | **Santé & fin de vie** | Système de santé, professionnels, accès aux soins, aide à mourir, soins palliatifs | Profession d'infirmier ; aide à mourir ; soins palliatifs ; gratuité des parkings d'hôpitaux |
-| 7 | **Sécurité, justice & pénal** | Droit pénal, police, criminalité, rétention, violences | Homicide routier ; définition pénale du viol ; rave-parties ; sécurité des commerçants |
-| 8 | **Immigration & nationalité** | Séjour, nationalité, asile, mineurs isolés | Renouvellement des titres de séjour ; mineurs isolés ; rétention administrative |
-| 9 | **Libertés, société & mémoire** | Droits civils, égalité, questions de société, mémoire historique, culture | Devoir conjugal ; réparation des condamnés pour homosexualité ; antisémitisme ; restitution de biens culturels ; abrogation du « code noir » |
-| 10 | **Éducation, enfance & numérique** | École, protection de l'enfance, mineurs en ligne, éducation | Protection des mineurs sur les réseaux sociaux ; éducation à la vie affective ; enfants à besoins éducatifs particuliers ; droit de l'enfant à un avocat |
-| 11 | **Institutions, démocratie & territoires** | Élections, statut des élus, décentralisation, motions de censure, outre-mer institutionnel | Motions de censure ; statut de l'élu local ; mode d'élection du Conseil de Paris ; refondation de Mayotte ; corps électoral de Nouvelle-Calédonie |
-| 12 | **Défense & international** | Armée, diplomatie, traités, grands événements | Programmation militaire 2024-2030 ; enseignement de la défense ; JO 2030 ; ratifications de traités |
+### 1. Économie, fiscalité & entreprises
+- **Budget & finances publiques** — loi de finances, fin de gestion, loi spéciale, dette
+- **Fiscalité** — cadre fiscal des micro-entreprises, fraude fiscale et sociale
+- **Entreprises & simplification** — simplification de la vie économique, commande publique
+- **Politique industrielle** — nationalisation d'ArcelorMittal, investissement hydroélectrique
 
-*(12 lignes : le « Défense & international » est listé séparément ; à fusionner
-ou garder selon votre préférence.)*
+### 2. Travail, emploi & protection sociale
+- **Droit du travail & emploi** — accords interprofessionnels, contrat de professionnalisation, accès à l'emploi
+- **Sécurité sociale & retraites** — PLFSS
+- **Famille & allocations** — allocations familiales dès le 1ᵉʳ enfant
+- **Fonction publique** — protection sociale des agents publics territoriaux
+
+### 3. Logement & urbanisme
+- **Loyers & rapports locatifs** — encadrement des loyers, rapports locatifs
+- **Construction & habitat** — transformation de bureaux en logements, mobilisation de l'habitat, logement des travailleurs des services publics
+- **Urbanisme & foncier** — simplification de l'urbanisme, patrimoine immobilier de l'État, préemption de baux commerciaux
+
+### 4. Écologie, énergie & climat
+- **Énergie** — programmation énergie-climat, hydroélectricité
+- **Climat & adaptation** — politique nationale d'adaptation au changement climatique
+- **Biodiversité & milieux** — montagne vivante, transport maritime à propulsion vélique
+
+### 5. Agriculture & alimentation
+- **Conditions d'exercice agricole** — contraintes du métier, place des agriculteurs dans l'aménagement
+- **Alimentation & consommation** — information sur l'origine des produits
+
+### 6. Santé & fin de vie
+- **Système de santé & professionnels** — infirmiers, médecins diplômés à l'étranger, missions des professionnels de santé, sécurité des soignants
+- **Accès aux soins** — gratuité des parkings d'hôpitaux, innovation thérapeutique
+- **Fin de vie & soins palliatifs** — aide à mourir, soins palliatifs
+
+### 7. Sécurité, justice & pénal
+- **Droit pénal & peines** — homicide routier, définition pénale du viol, rave-parties
+- **Sécurité & ordre public** — sécurité des commerçants, rétention administrative
+- **Justice & procédure** — recouvrement de créances, droit de visite des parlementaires, protection contre la criminalité
+
+### 8. Immigration & nationalité
+- **Séjour & asile** — titres de séjour, rétention administrative des étrangers
+- **Mineurs isolés** — protection des mineurs isolés, sans-abrisme
+
+### 9. Libertés, société & mémoire
+- **Droits & égalité** — devoir conjugal, égal accès au service public
+- **Mémoire & réparations** — condamnations pour homosexualité, « code noir », essais nucléaires, rapatriés d'Indochine, transplantation de mineurs
+- **Lutte contre les discriminations** — antisémitisme dans l'enseignement supérieur
+- **Culture & patrimoine** — restitution de biens culturels, droits voisins des éditeurs
+
+### 10. Éducation, enfance & numérique
+- **École & enseignement** — regroupements pédagogiques, éducation à la vie affective, enseignement de la défense
+- **Protection de l'enfance** — intérêt de l'enfant, droit à un avocat, enfants à besoins éducatifs particuliers
+- **Enfance & numérique** — protection des mineurs sur les réseaux sociaux
+
+### 11. Institutions, démocratie & territoires
+- **Vie démocratique & élections** — vote par correspondance des détenus, élection du Conseil de Paris, corps électoral de Nouvelle-Calédonie
+- **Gouvernement & responsabilité** — motions de censure
+- **Élus & collectivités** — statut de l'élu local, millefeuille territorial, compensation financière aux communes
+- **Statut des territoires** — refondation de Mayotte, Corse, renouvellement du congrès de Nouvelle-Calédonie
+
+### 12. Défense & international
+- **Défense & armées** — programmation militaire 2024-2030, enseignement de la défense nationale
+- **Diplomatie & traités** — ratifications, restitution de biens culturels à des États
+- **Grands événements** — JO et Paralympiques 2030
 
 ---
 
-## Étiquettes transversales proposées (optionnelles)
+## Étiquettes transversales (4)
 
-Si l'on retient l'option « thèmes + étiquettes » :
+Marqueurs qui traversent plusieurs thèmes ; se combinent à n'importe quel
+sous-thème.
 
-- **Outre-mer** — Mayotte, Corse, Nouvelle-Calédonie, vie chère ultramarine.
-- **Ruralité / territoires** — montagne, communes, intercommunalité.
-- **Europe / international** — traités, accords, ratifications.
-- **Numérique** — réseaux sociaux, données, plateformes.
+- **`outre-mer`** — Mayotte, Corse, Nouvelle-Calédonie, vie chère ultramarine
+- **`ruralité`** — montagne, communes, intercommunalité, agriculture territoriale
+- **`europe-international`** — traités, accords, ratifications
+- **`numérique`** — réseaux sociaux, plateformes, données
 
 ---
 
-## Ce qui reste à décider
+## Cas-limites tranchés (proposition)
 
-1. **Structure** : thèmes plats, ou thèmes de fond + étiquettes transversales ?
-2. **Granularité** : 11–12 thèmes est-il le bon grain ? Fusions souhaitées
-   (ex. *Agriculture* dans *Écologie* ? *Immigration* dans *Sécurité* ?) —
-   chaque fusion est un choix politique à assumer.
-3. **Cas-limites** : où classe-t-on les motions de censure (toujours
-   *Institutions* ? ou selon le contexte budgétaire qui les a déclenchées) ?
+- **Motions de censure** → *Institutions ▸ Gouvernement & responsabilité*
+  systématiquement (le geste politique prime), même quand déclenchées par un
+  budget. Une note pourra rappeler le contexte déclencheur.
+- **Restitution de biens culturels** → double : *Libertés ▸ Culture & patrimoine*
+  + *Défense & international ▸ Diplomatie & traités*.
+- **Outre-mer** → toujours une **étiquette**, jamais un thème ; le vote garde son
+  sous-thème de fond (économie, institutions…).
 
-Une fois ces points tranchés, on passe à l'affectation des 115 votes selon
-l'approche **assistée puis validée**.
+---
+
+## Prochaine étape (après validation)
+
+Affectation des 115 votes selon l'approche **assistée puis validée** :
+classification automatique proposée (titre + dossier) → relecture et correction
+humaine → enrichissement du champ `themes` dans `public/data/scrutins.json`.
