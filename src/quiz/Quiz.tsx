@@ -6,14 +6,21 @@ import {
   Container,
   Heading,
   HStack,
+  Link,
   Spinner,
   Stack,
   Text,
+  Wrap,
 } from '@chakra-ui/react'
 import type { Answer, Dataset, Scrutin, Taxonomy } from './types'
 import { balancedSample, loadData, scoreAgreement } from './dataset'
 
 type Phase = 'intro' | 'quiz' | 'results'
+
+const AN_SCRUTIN = (numero: number) =>
+  `https://www.assemblee-nationale.fr/dyn/17/scrutins/${numero}`
+const AN_DOSSIER = (ref: string) =>
+  `https://www.assemblee-nationale.fr/dyn/17/dossiers/${ref}`
 
 /** Rend un titre de scrutin lisible comme question. */
 function cleanTitle(s: Scrutin): string {
@@ -39,6 +46,13 @@ export function Quiz() {
     [data],
   )
 
+  // Sous-thème (id) → libellé, pour afficher les thèmes d'un scrutin.
+  const subLabel = useMemo(() => {
+    const m = new Map<string, string>()
+    if (data) for (const t of data.taxonomy.themes) for (const s of t.subthemes) m.set(s.id, s.label)
+    return m
+  }, [data])
+
   if (error) {
     return (
       <Centered>
@@ -54,8 +68,10 @@ export function Quiz() {
     )
   }
 
-  function answer(uid: string, a: Answer) {
+  function recordAnswer(uid: string, a: Answer) {
     setAnswers((prev) => ({ ...prev, [uid]: a }))
+  }
+  function goNext() {
     if (index + 1 < sample.length) setIndex(index + 1)
     else setPhase('results')
   }
@@ -76,12 +92,16 @@ export function Quiz() {
 
   if (phase === 'quiz') {
     const scrutin = sample[index]
+    const themeLabels = scrutin.themes.subthemes.map((id) => subLabel.get(id) ?? id)
     return (
       <Question
+        key={scrutin.uid}
         scrutin={scrutin}
+        themeLabels={themeLabels}
         index={index}
         total={sample.length}
-        onAnswer={(a) => answer(scrutin.uid, a)}
+        onAnswer={(a) => recordAnswer(scrutin.uid, a)}
+        onNext={goNext}
         onBack={index > 0 ? () => setIndex(index - 1) : undefined}
       />
     )
@@ -138,13 +158,7 @@ function Intro({
           derniers mois. Pour chacun, indiquez ce que vous auriez voté. On
           regardera ensuite de quel groupe vos réponses se rapprochent.
         </Text>
-        <Box
-          bg="orange.50"
-          borderWidth="1px"
-          borderColor="orange.200"
-          borderRadius="lg"
-          p={4}
-        >
+        <Box bg="orange.50" borderWidth="1px" borderColor="orange.200" borderRadius="lg" p={4}>
           <Text fontSize="sm" color="orange.900">
             <strong>À garder en tête.</strong> Un score de proximité compare votre
             réponse à la <em>ligne majoritaire</em> de chaque groupe — pas à la
@@ -163,19 +177,30 @@ function Intro({
 
 function Question({
   scrutin,
+  themeLabels,
   index,
   total,
   onAnswer,
+  onNext,
   onBack,
 }: {
   scrutin: Scrutin
+  themeLabels: string[]
   index: number
   total: number
   onAnswer: (a: Answer) => void
+  onNext: () => void
   onBack?: () => void
 }) {
+  const [chosen, setChosen] = useState<Answer | null>(null)
   const isMotion = scrutin.category === 'motion'
   const pct = Math.round(((index + 1) / total) * 100)
+
+  function pick(a: Answer) {
+    setChosen(a)
+    onAnswer(a)
+  }
+
   return (
     <Shell>
       <Stack gap={6}>
@@ -208,32 +233,114 @@ function Question({
           )}
         </Box>
 
-        <Stack gap={3}>
-          <HStack gap={3}>
-            <Button flex={1} colorPalette="green" variant="outline" onClick={() => onAnswer('pour')}>
-              Pour
-            </Button>
-            <Button flex={1} colorPalette="red" variant="outline" onClick={() => onAnswer('contre')}>
-              Contre
-            </Button>
-          </HStack>
-          <HStack gap={3}>
-            <Button flex={1} colorPalette="gray" variant="outline" onClick={() => onAnswer('abstention')}>
-              Abstention
-            </Button>
-            <Button flex={1} colorPalette="gray" variant="ghost" onClick={() => onAnswer('passer')}>
-              Passer
-            </Button>
-          </HStack>
-        </Stack>
+        {/* Contexte AVANT réponse : informer sans orienter (thèmes + lien texte),
+            sans révéler comment le vote a réellement tourné. */}
+        {themeLabels.length > 0 && (
+          <Wrap gap={2}>
+            {themeLabels.map((l) => (
+              <Badge key={l} colorPalette="gray" variant="subtle">
+                {l}
+              </Badge>
+            ))}
+          </Wrap>
+        )}
+        {!chosen && scrutin.dossier?.ref && (
+          <Link
+            href={AN_DOSSIER(scrutin.dossier.ref)}
+            color="teal.600"
+            fontSize="sm"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Lire le texte (dossier législatif) ↗
+          </Link>
+        )}
 
-        {onBack && (
-          <Button variant="plain" size="sm" alignSelf="flex-start" onClick={onBack} color="gray.500">
-            ← Précédent
-          </Button>
+        {!chosen ? (
+          <Stack gap={3}>
+            <HStack gap={3}>
+              <Button flex={1} colorPalette="green" variant="outline" onClick={() => pick('pour')}>
+                Pour
+              </Button>
+              <Button flex={1} colorPalette="red" variant="outline" onClick={() => pick('contre')}>
+                Contre
+              </Button>
+            </HStack>
+            <HStack gap={3}>
+              <Button flex={1} colorPalette="gray" variant="outline" onClick={() => pick('abstention')}>
+                Abstention
+              </Button>
+              <Button flex={1} colorPalette="gray" variant="ghost" onClick={() => pick('passer')}>
+                Passer
+              </Button>
+            </HStack>
+            {onBack && (
+              <Button variant="plain" size="sm" alignSelf="flex-start" onClick={onBack} color="gray.500">
+                ← Précédent
+              </Button>
+            )}
+          </Stack>
+        ) : (
+          <Reveal scrutin={scrutin} chosen={chosen} onNext={onNext} isLast={index + 1 === total} />
         )}
       </Stack>
     </Shell>
+  )
+}
+
+/** Bloc révélé APRÈS la réponse : résultat réel + décompte + source officielle. */
+function Reveal({
+  scrutin,
+  chosen,
+  onNext,
+  isLast,
+}: {
+  scrutin: Scrutin
+  chosen: Answer
+  onNext: () => void
+  isLast: boolean
+}) {
+  const adopté = scrutin.sort === 'adopté'
+  const choiceLabel: Record<Answer, string> = {
+    pour: 'Pour',
+    contre: 'Contre',
+    abstention: 'Abstention',
+    passer: 'Passé',
+  }
+  return (
+    <Stack gap={4}>
+      <Text fontSize="sm" color="gray.500">
+        Votre réponse : <strong>{choiceLabel[chosen]}</strong>
+      </Text>
+      <Box bg="white" borderWidth="1px" borderColor="gray.200" borderRadius="lg" p={4}>
+        <HStack justify="space-between" mb={2}>
+          <Text fontWeight="bold" fontSize="sm">
+            Ce qu'a décidé l'Assemblée
+          </Text>
+          <Badge colorPalette={adopté ? 'green' : 'gray'} variant="subtle">
+            {adopté ? 'Adopté' : 'Rejeté'}
+          </Badge>
+        </HStack>
+        <Text fontSize="sm" color="gray.600">
+          Pour {scrutin.synthese.pour} · Contre {scrutin.synthese.contre} ·
+          Abstention {scrutin.synthese.abstention}
+        </Text>
+        <Link
+          href={AN_SCRUTIN(scrutin.numero)}
+          color="teal.600"
+          fontSize="sm"
+          mt={2}
+          display="inline-block"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Voir l'analyse officielle du scrutin (vote par groupe et député) ↗
+        </Link>
+      </Box>
+      <Button colorPalette="teal" alignSelf="flex-start" onClick={onNext}>
+        {isLast ? 'Voir mes résultats' : 'Continuer'}
+      </Button>
+    </Stack>
   )
 }
 
